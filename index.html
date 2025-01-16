@@ -12,7 +12,7 @@
             height: 200px;  /* Adjust size as needed */
             background: url('static/envelope.png') no-repeat center center;
             background-size: cover;
-            color: white;
+            color: white;   /* Consider changing if it still blends in */
             font-size: 20px;
             text-align: center;
             line-height: 200px; /* Adjust if needed */
@@ -37,35 +37,6 @@
             visibility: visible; /* Make visible when revealed */
         }
 
-        .spark {
-            position: absolute;
-            top: 50%; /* Center of the envelope */
-            left: 50%;
-            width: 10px;
-            height: 10px;
-            background-color: yellow;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: none;
-            display: none; /* Hidden by default */
-        }
-
-        .envelope.clicked .spark {
-            display: block; /* Show spark on click */
-            animation: spark 0.5s linear forwards;
-        }
-
-        @keyframes spark {
-            0% {
-                transform: translate(-50%, -50%) scale(0.1);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(2);
-                opacity: 0;
-            }
-        }
-
         .hidden {
             visibility: hidden;
         }
@@ -75,35 +46,48 @@
             cursor: default; /* No longer clickable */
             color: black; /* Make text visible */
         }
+
+        .firecracker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none; /* Hidden by default */
+        }
+
+        .envelope.clicked .firecracker {
+            display: block; /* Show firecracker on click */
+        }
     </style>
 </head>
 <body>
     <h1>Chọn Một Đi Em (ONLY ONE)</h1>
     <div id="envelope1" class="envelope">
         <span>$50</span>
-        <div class="spark"></div>
+        <img src="static/firecracker.gif" alt="Firecracker" class="firecracker">
     </div>
     <div id="envelope2" class="envelope">
         <span>$45</span>
-        <div class="spark"></div>
+        <img src="static/firecracker.gif" alt="Firecracker" class="firecracker">
     </div>
     <div id="envelope3" class="envelope">
         <span>$40</span>
-        <div class="spark"></div>
+        <img src="static/firecracker.gif" alt="Firecracker" class="firecracker">
     </div>
     <div id="envelope4" class="envelope">
         <span>$35</span>
-        <div class="spark"></div>
+        <img src="static/firecracker.gif" alt="Firecracker" class="firecracker">
     </div>
     <div id="envelope5" class="envelope">
         <span>$30</span>
-        <div class="spark"></div>
+        <img src="static/firecracker.gif" alt="Firecracker" class="firecracker">
     </div>    
     <p id="result" style="font-size: 24px;"></p>
 
     <script>
         let amounts = [50, 45, 40, 35, 30]; // Set fixed amounts for clarity
-
+    
         // Shuffle the amounts for randomness
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -111,37 +95,31 @@
                 [array[i], array[j]] = [array[j], array[i]]; // Swap elements
             }
         }
-
+    
         // Ensure the shuffle function is called each time the script runs
         shuffle(amounts);
-
+    
         function openEnvelope(index) {
             const envelopes = document.querySelectorAll('.envelope');
             const result = document.getElementById('result');
             
             envelopes.forEach((env, i) => {
                 const span = env.querySelector('span');
-                const spark = env.querySelector('.spark');
-
+                const firecracker = env.querySelector('.firecracker');
                 if (i === index) {
                     result.textContent = "Cho Em $" + amounts[i] + ". Sinh nhật vui vẻ, thêm tuổi mới xinh đẹp, và bớt lì lại :)))";
-
-                    // Add "clicked" class to trigger spark animation
-                    env.classList.add('clicked');
-
-                    // Show the spark effect
-                    spark.style.display = 'block';
-                    spark.style.animation = 'none'; // Reset animation
-                    spark.offsetHeight; // Trigger reflow
-                    spark.style.animation = ''; // Restart animation
+                    env.classList.add('clicked'); // Add clicked class to trigger firecracker
+                    firecracker.style.display = 'block'; // Show the firecracker gif
+                    setTimeout(() => {
+                        firecracker.style.display = 'none'; // Hide firecracker after animation
+                    }, 2000); // Adjust time based on your gif duration
                 }
-
                 span.textContent = "$" + amounts[i]; // Show shuffled amount
                 env.classList.add('revealed'); // Reveal all envelopes
                 span.style.visibility = 'visible'; // Make the span visible
             });
         }
-
+    
         document.getElementById('envelope1').onclick = () => openEnvelope(0);
         document.getElementById('envelope2').onclick = () => openEnvelope(1);
         document.getElementById('envelope3').onclick = () => openEnvelope(2);
