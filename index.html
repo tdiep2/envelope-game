@@ -22,13 +22,19 @@
         }
 
         .envelope span {
+            visibility: hidden; /* Start with hidden money amounts */
             position: absolute;
-            width: 100%;   /* Full width of the envelope */
-            bottom: 10px;  /* Positioned at the bottom */
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-            color: white;
-            font-size: 16px; /* Slightly smaller text */
-            text-shadow: 2px 2px 4px #000000; /* Black shadow makes it readable on lighter backgrounds */
+            bottom: 10px; /* Position at the bottom of the envelope */
+            width: 100%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Light background for readability */
+            color: black; /* Ensure text is readable */
+            font-size: 18px; /* Adjust size as needed */
+            padding: 2px 0; /* Padding for visual comfort */
+        }
+
+        .envelope.revealed span {
+            visibility: visible; /* Make visible when revealed */
         }
         
         .hidden {
@@ -42,49 +48,38 @@
     </style>
 </head>
 <body>
-    <h1>Chọn Một Đi Em (ONLY ONE)</h1>
     <div id="envelope1" class="envelope"><span>$50</span></div>
     <div id="envelope2" class="envelope"><span>$45</span></div>
     <div id="envelope3" class="envelope"><span>$40</span></div>
     <div id="envelope4" class="envelope"><span>$35</span></div>
-    <div id="envelope5" class="envelope"><span>$30</span></div>
+    <div id="envelope5" class="envelope"><span>$30</span></div>    
     <p id="result" style="font-size: 24px;"></p>
 
-<script>
-    // Updated array of amounts for each envelope
-    const amounts = [30, 35, 40, 45, 50]; // Updated amounts
-
-    // Shuffle the amounts for randomness
-    function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+    <script>
+        const amounts = [50, 45, 40, 35, 30]; // Set fixed amounts for clarity
+    
+        function openEnvelope(index) {
+            const envelopes = document.querySelectorAll('.envelope');
+            const result = document.getElementById('result');
+            
+            envelopes.forEach((env, i) => {
+                const span = env.querySelector('span'); // Get the span inside each envelope
+                if (i === index) {
+                    result.textContent = "Cho Em $" + amounts[i] + ". Sinh nhật vui vẻ, thêm tuổi mới xinh đẹp, và bớt lì lại :)))";
+                    span.textContent = "$" + amounts[i]; // Optionally refresh the displayed amount
+                } else {
+                    span.textContent = "$" + amounts[i]; // Ensure all amounts are correct
+                }
+                env.classList.add('revealed'); // Reveal all envelopes
+                span.style.visibility = 'visible'; // Make the span visible
+            });
         }
-    }
-
-    shuffle(amounts);
-
-    // Function to open an envelope and reveal all
-    function openEnvelope(selectedIndex) {
-        const envelopes = document.querySelectorAll('.envelope');
-        envelopes.forEach((env, index) => {
-            // Commenting out to allow multiple interactions during testing
-            // env.onclick = null; // Disable further clicks
-            if (index === selectedIndex) {
-                const result = document.getElementById('result');
-                result.textContent = "Cho Em $" + amounts[index] + ". Sinh nhật vui vẻ, thêm tuổi mới xinh đẹp, và bớt lì lại :)))";
-            } else {
-                env.textContent = "$" + amounts[index]; // Show amount in other envelopes
-            }
-            env.classList.add('revealed'); // Change style to indicate it's been revealed
-        });
-    }
-
-    document.getElementById('envelope1').onclick = () => openEnvelope(0);
-    document.getElementById('envelope2').onclick = () => openEnvelope(1);
-    document.getElementById('envelope3').onclick = () => openEnvelope(2);
-    document.getElementById('envelope4').onclick = () => openEnvelope(3);
-    document.getElementById('envelope5').onclick = () => openEnvelope(4);
-</script>
+    
+        document.getElementById('envelope1').onclick = () => openEnvelope(0);
+        document.getElementById('envelope2').onclick = () => openEnvelope(1);
+        document.getElementById('envelope3').onclick = () => openEnvelope(2);
+        document.getElementById('envelope4').onclick = () => openEnvelope(3);
+        document.getElementById('envelope5').onclick = () => openEnvelope(4);
+    </script>
 </body>
 </html>
