@@ -56,19 +56,28 @@
     <p id="result" style="font-size: 24px;"></p>
 
     <script>
-        const amounts = [50, 45, 40, 35, 30]; // Set fixed amounts for clarity
+        let amounts = [50, 45, 40, 35, 30]; // Set fixed amounts for clarity
+    
+        // Shuffle the amounts for randomness
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+        }
+    
+        // Ensure the shuffle function is called each time the script runs
+        shuffle(amounts);
     
         function openEnvelope(index) {
             const envelopes = document.querySelectorAll('.envelope');
             const result = document.getElementById('result');
             
             envelopes.forEach((env, i) => {
-                const span = env.querySelector('span'); // Get the span inside each envelope
+                const span = env.querySelector('span');
+                span.textContent = "$" + amounts[i]; // Show shuffled amount
                 if (i === index) {
                     result.textContent = "Cho Em $" + amounts[i] + ". Sinh nhật vui vẻ, thêm tuổi mới xinh đẹp, và bớt lì lại :)))";
-                    span.textContent = "$" + amounts[i]; // Optionally refresh the displayed amount
-                } else {
-                    span.textContent = "$" + amounts[i]; // Ensure all amounts are correct
                 }
                 env.classList.add('revealed'); // Reveal all envelopes
                 span.style.visibility = 'visible'; // Make the span visible
