@@ -100,11 +100,12 @@
 
         // Check if the user already selected an envelope
         const selectedEnvelope = localStorage.getItem('selectedEnvelope');
-        if (selectedEnvelope) {
-            revealEnvelopes(selectedEnvelope);
+        const storedMessage = localStorage.getItem('resultMessage');
+        if (selectedEnvelope && storedMessage) {
+            revealEnvelopes(selectedEnvelope, storedMessage);
         }
 
-        function revealEnvelopes(index) {
+        function revealEnvelopes(index, message) {
             const envelopes = document.querySelectorAll('.envelope');
             const result = document.getElementById('result');
             
@@ -113,7 +114,7 @@
                 const firecracker = env.querySelector('.firecracker');
                 span.textContent = "$" + amounts[i];
                 if (i === parseInt(index)) {
-                    result.textContent = "Cho Em $" + amounts[i] + ". Sinh nhật vui vẻ, thêm tuổi mới xinh đẹp, và bớt lì bớt cãi lại :)))";
+                    result.textContent = message;
                     env.classList.add('clicked');
                     firecracker.style.display = 'block';
                     setTimeout(() => {
@@ -127,12 +128,14 @@
 
         function openEnvelope(index) {
             if (localStorage.getItem('selectedEnvelope')) {
-                alert("BỚT ĂN GIAN LẠI =,=");
+                alert("=,= BỚT ĂN GIAN LẠI! =,=");
                 return;
             }
 
+            const message = "Cho Em $" + amounts[index] + ". Sinh nhật vui vẻ, thêm tuổi mới xinh đẹp, và bớt lì bớt cãi lại :)))";
             localStorage.setItem('selectedEnvelope', index); // Store the selected envelope
-            revealEnvelopes(index);
+            localStorage.setItem('resultMessage', message); // Store the result message
+            revealEnvelopes(index, message);
         }
 
         document.getElementById('envelope1').onclick = () => openEnvelope(0);
