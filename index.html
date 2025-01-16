@@ -25,15 +25,17 @@
     </style>
 </head>
 <body>
-    <h1>Choose an Envelope</h1>
+    <h1>Chọn Một Đi Em (ONLY ONE)</h1>
     <div id="envelope1" class="envelope">Envelope 1</div>
     <div id="envelope2" class="envelope">Envelope 2</div>
     <div id="envelope3" class="envelope">Envelope 3</div>
+    <div id="envelope4" class="envelope">Envelope 4</div> <!-- New envelope -->
+    <div id="envelope5" class="envelope">Envelope 5</div> <!-- New envelope -->
     <p id="result" style="font-size: 24px;"></p>
 
     <script>
-        // Array of amounts for each envelope
-        const amounts = [30, 40, 50];
+        // Updated array of amounts for each envelope
+        const amounts = [30, 35, 40, 45, 50]; // Updated amounts
     
         // Shuffle the amounts for randomness
         function shuffle(array) {
@@ -47,17 +49,18 @@
     
         // Function to open an envelope
         function openEnvelope(index) {
-            /* Commenting out to allow multiple interactions during testing
+            /* Uncomment for production to limit to one pick
             if (localStorage.getItem('picked')) {
-                alert("You've already picked an envelope!");
+                alert("Bớt Cheating Lại =,=");
                 return;
             }
             */
     
             const result = document.getElementById('result');
-            result.textContent = "You won $" + amounts[index];
-            // Commenting out to allow multiple interactions during testing
-            // localStorage.setItem('picked', true);
+            result.textContent = "Cho Em $" + amounts[index] + " sinh nhật vui vẻ, thêm tuổi mới xinh đẹp, và bớt lì lại :)))";
+            /* Uncomment for production to save the pick state
+            localStorage.setItem('picked', true);
+            */
     
             // Disable all envelopes after one is opened
             document.querySelectorAll('.envelope').forEach(env => {
@@ -68,6 +71,8 @@
         document.getElementById('envelope1').onclick = () => openEnvelope(0);
         document.getElementById('envelope2').onclick = () => openEnvelope(1);
         document.getElementById('envelope3').onclick = () => openEnvelope(2);
+        document.getElementById('envelope4').onclick = () => openEnvelope(3); // New envelope interaction
+        document.getElementById('envelope5').onclick = () => openEnvelope(4); // New envelope interaction
     </script>
 </body>
 </html>
