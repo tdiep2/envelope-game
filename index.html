@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envelope Game</title>
+    <style>
+        .envelope {
+            cursor: pointer;
+            display: inline-block;
+            width: 120px;
+            height: 200px;
+            background-color: red;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            line-height: 200px;
+            margin: 10px;
+            user-select: none; /* Prevents text selection */
+        }
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose an Envelope</h1>
+    <div id="envelope1" class="envelope">Envelope 1</div>
+    <div id="envelope2" class="envelope">Envelope 2</div>
+    <div id="envelope3" class="envelope">Envelope 3</div>
+    <p id="result" style="font-size: 24px;"></p>
+
+    <script>
+        // Array of amounts for each envelope
+        const amounts = [100, 250, 500];
+
+        // Function to open an envelope
+        function openEnvelope(index) {
+            const result = document.getElementById('result');
+            result.textContent = "You won $" + amounts[index];
+
+            // Disable all envelopes after one is opened
+            document.querySelectorAll('.envelope').forEach(env => {
+                env.classList.add('hidden');
+            });
+        }
+
+        // Adding click event listeners to envelopes
+        document.getElementById('envelope1').onclick = () => openEnvelope(0);
+        document.getElementById('envelope2').onclick = () => openEnvelope(1);
+        document.getElementById('envelope3').onclick = () => openEnvelope(2);
+    </script>
+</body>
+</html>
