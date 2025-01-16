@@ -12,13 +12,25 @@
             height: 200px;  /* Adjust size as needed */
             background: url('static/envelope.png') no-repeat center center;
             background-size: cover;
-            color: white;
+            color: white;   /* Consider changing if it still blends in */
             font-size: 20px;
             text-align: center;
             line-height: 200px; /* Adjust if needed */
             margin: 10px;
             user-select: none; /* Prevents text selection */
+            position: relative; /* Needed for absolute positioning of the label */
         }
+
+        .envelope span {
+            position: absolute;
+            width: 100%;   /* Full width of the envelope */
+            bottom: 10px;  /* Positioned at the bottom */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            color: white;
+            font-size: 16px; /* Slightly smaller text */
+            text-shadow: 2px 2px 4px #000000; /* Black shadow makes it readable on lighter backgrounds */
+        }
+        
         .hidden {
             visibility: hidden;
         }
@@ -31,11 +43,11 @@
 </head>
 <body>
     <h1>Chọn Một Đi Em (ONLY ONE)</h1>
-    <div id="envelope1" class="envelope">Envelope 1</div>
-    <div id="envelope2" class="envelope">Envelope 2</div>
-    <div id="envelope3" class="envelope">Envelope 3</div>
-    <div id="envelope4" class="envelope">Envelope 4</div> 
-    <div id="envelope5" class="envelope">Envelope 5</div> 
+    <div id="envelope1" class="envelope"><span>$50</span></div>
+    <div id="envelope2" class="envelope"><span>$45</span></div>
+    <div id="envelope3" class="envelope"><span>$40</span></div>
+    <div id="envelope4" class="envelope"><span>$35</span></div>
+    <div id="envelope5" class="envelope"><span>$30</span></div>
     <p id="result" style="font-size: 24px;"></p>
 
 <script>
